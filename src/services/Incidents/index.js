@@ -19,5 +19,10 @@ module.exports = {
             .where({ong_id})
             .limit(max)
             .offset(offset);
+    },
+    async delete({id, ong_id}){
+        return await connection('incidents')
+            .where({ong_id, id})
+            .delete();
     }
 }

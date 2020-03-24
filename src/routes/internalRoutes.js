@@ -1,5 +1,8 @@
 const router = require('express').Router({caseSensitive: true});
-const {NOT_IMPLEMENTED} = require('http-status-codes');
+
+const {
+    NOT_IMPLEMENTED
+} = require('http-status-codes');
 
 
 router.post('/', (req, res)=>{
