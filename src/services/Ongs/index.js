@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const connection = require('../../database/connection');
+const Ongs = require(`../../database/models/Ongs`);
 
 module.exports = {
     async create({name, email, whatsapp, city, uf}){
@@ -18,9 +19,16 @@ module.exports = {
     },
     async listAll({offset, max}){
         return await connection
-            .select('*')
+            .select([...Ongs.publicFields])
             .from('ongs')
             .limit(max)
             .offset(offset);
+    },
+    async login({id}){
+        return await connection
+            .select([...Ongs.publicFields, ...Ongs.privateFields])
+            .from('ongs')
+            .where({id})
+            .first()
     }
 }

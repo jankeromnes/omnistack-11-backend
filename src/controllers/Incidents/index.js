@@ -8,7 +8,7 @@ const IncidentsService = require('../../services/Incidents');
 
 module.exports = {
     async create(req, res){
-        const {ong_id} = req.headerParams;
+        const {ong_id} = req.tokenParams;
         const {title, description, value} = req.body;
         const validValue = (typeof value === 'number') && value >= 0;
         if(!title || !description || !validValue){
@@ -49,7 +49,7 @@ module.exports = {
         }
     },
     async delete(req, res){
-        const {ong_id} = req.headerParams;
+        const {ong_id} = req.tokenParams;
         const {id} = req.params;
         try{
             const deletedRows = res.json(await IncidentsService.delete({

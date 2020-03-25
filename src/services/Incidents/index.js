@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const connection = require('../../database/connection');
+const Incidents = require('../../database/models/Incidents');
 
 module.exports = {
     async create({title, description, value, ong_id}){
@@ -14,7 +15,7 @@ module.exports = {
     },
     async list({offset, max, ong_id}){
         return await connection
-            .select('*')
+            .select([[...Incidents.publicFields,]])
             .from('incidents')
             .where({ong_id})
             .limit(max)

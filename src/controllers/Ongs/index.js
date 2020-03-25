@@ -1,4 +1,9 @@
-const {BAD_REQUEST, INTERNAL_SERVER_ERROR, UNAUTHORIZED} = require('http-status-codes');
+const {
+    BAD_REQUEST, 
+    INTERNAL_SERVER_ERROR, 
+    UNAUTHORIZED,
+    NOT_FOUND,
+} = require('http-status-codes');
 const OngsService = require('../../services/Ongs');
 
 module.exports = {
@@ -17,7 +22,7 @@ module.exports = {
             return res.json({
                 id: await OngsService.create({
                     name,
-                    email,
+                    email: email.toLowerCase().replace(/\s+/g,''),
                     whatsapp,
                     city,
                     uf
@@ -43,5 +48,5 @@ module.exports = {
                 error: "Ocorreu um erro ao tentar listar as ONGS cadastradas!",
             });
         }
-    }
+    },
 };
