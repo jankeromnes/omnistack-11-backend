@@ -105,3 +105,6 @@ dist
 
 #env
 .env
+
+#devDB
+*.sqlite3
