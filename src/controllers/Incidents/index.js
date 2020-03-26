@@ -8,7 +8,7 @@ const IncidentsService = require('../../services/Incidents');
 
 module.exports = {
     async create(req, res){
-        const {ong_id} = req.tokenParams;
+        const {id: ong_id} = req.tokenParams;
         const {title, description, value} = req.body;
         const validValue = (typeof value === 'number') && value >= 0;
         if(!title || !description || !validValue){
@@ -40,22 +40,24 @@ module.exports = {
         offset = new Number(offset).valueOf() || 0;
         max = new Number(max).valueOf() || defaultMaxValue;
         try{
-            return res.json(await IncidentsService.list({offset, max, ong_id}));
+            const {count, results} = await IncidentsService.listAll({offset, max});
+            res.header('X-Total-Count', count['count(*)']);
+            res.json(results);
         }catch(e){
             console.log(e);
             return res.status(INTERNAL_SERVER_ERROR).json({
-                error: "Ocorreu um erro ao tentar listar as ONGS cadastradas!",
+                error: "Ocorreu um erro ao tentar listar os casos cadastradas!",
             });
         }
     },
     async delete(req, res){
-        const {ong_id} = req.tokenParams;
+        const {id: ong_id} = req.tokenParams;
         const {id} = req.params;
         try{
-            const deletedRows = res.json(await IncidentsService.delete({
+            const deletedRows = await IncidentsService.delete({
                 ong_id,
                 id,
-            }));
+            });
             switch(deletedRows){
                 case 1:
                     return res.status(NO_CONTENT).send();

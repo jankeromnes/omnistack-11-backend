@@ -5,7 +5,7 @@ const {
 const jwt = require('jsonwebtoken');
 module.exports = (req, res, next)=>{
     // not Authorization: Bearer {token}, the token won't be permanent
-    const token = req.headers['X-Access-Token'];
+    const token = req.headers['x-access-token'];
     if(!token){
         return res.status(UNAUTHORIZED).json({
             error: "Não autenticado!"

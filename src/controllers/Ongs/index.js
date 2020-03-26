@@ -41,7 +41,9 @@ module.exports = {
         offset = new Number(offset).valueOf() || 0;
         max = new Number(max).valueOf() || defaultMaxValue;
         try{
-            return res.json(await OngsService.listAll({offset, max}));
+            const {count, results} = res.json(await OngsService.listAll({offset, max}));
+            res.header('X-Total-Count', count);
+            res.json(results);
         }catch(e){
             console.log(e);
             return res.status(INTERNAL_SERVER_ERROR).json({

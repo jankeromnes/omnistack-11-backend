@@ -18,13 +18,21 @@ module.exports = {
         return id;
     },
     async listAll({offset, max}){
-        return await connection
-            .select([...Ongs.publicFields])
-            .from('ongs')
-            .limit(max)
-            .offset(offset);
+        const count = await connection('ongs').count();
+        const results = count ? 
+            await connection
+                .select([...Ongs.publicFields])
+                .from('ongs')
+                .limit(max)
+                .offset(offset)
+            :
+            [];
+        return {
+            count,
+            results,
+        }
     },
-    async login({id}){
+    async get({id}){
         return await connection
             .select([...Ongs.publicFields, ...Ongs.privateFields])
             .from('ongs')

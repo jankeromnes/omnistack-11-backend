@@ -17,7 +17,7 @@ module.exports = {
             })
         }
         try{
-            const ong = await OngsService.login({id});
+            const ong = await OngsService.get({id});
             if(!ong){
                 return res.status(NOT_FOUND).json({
                     error: "Não foi encontrada uma ong com o id informado!",
@@ -26,10 +26,8 @@ module.exports = {
             const token = jwt.sign({id}, process.env.JWT_SECRET, {
                 expiresIn: 7776000, //3 months
             });
-            return res.json({
-                token,
-                ong,
-            });
+            res.header('X-Access-Token', token);
+            return res.json(ong);
         }catch(e){
             console.log(e);
             return res.status(INTERNAL_SERVER_ERROR).json({

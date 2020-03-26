@@ -5,7 +5,7 @@ module.exports = {
     async listIncidents(req, res){
         const defaultMaxValue = 10;
         let {offset = 0, max = defaultMaxValue} = req.query;
-        const {ong_id: id} = req.tokenParams;
+        const {id: ong_id} = req.tokenParams;
         offset = new Number(offset).valueOf() || 0;
         max = new Number(max).valueOf() || defaultMaxValue;
         try{

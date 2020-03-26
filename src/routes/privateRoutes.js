@@ -12,6 +12,6 @@ const {
 } = require('../controllers');
 
 router.post('/incidents', authentication, IncidentsController.create);
-router.delete('/incidents/id', authentication, IncidentsController.delete);
+router.delete('/incidents/:id', authentication, IncidentsController.delete);
 
 module.exports = router;
