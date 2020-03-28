@@ -9,11 +9,13 @@ module.exports = {
         offset = new Number(offset).valueOf() || 0;
         max = new Number(max).valueOf() || defaultMaxValue;
         try{
-            return res.json(await IncidentsService.list({
+            const {count, results} = await IncidentsService.list({
                 max,
                 offset,
                 ong_id
-            }));
+            });
+            res.header('X-Total-Count',count);
+            return res.json(results);
         }catch(e){
             console.log(e);
             return res.status(INTERNAL_SERVER_ERROR).json({

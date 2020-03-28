@@ -8,10 +8,13 @@ const {
 const router = require('express').Router({caseSensitive: true});
 
 const {
-    IncidentsController
+    IncidentsController,
+    ProfileController,
 } = require('../controllers');
 
 router.post('/incidents', authentication, IncidentsController.create);
 router.delete('/incidents/:id', authentication, IncidentsController.delete);
+
+router.get('/profile', authentication, ProfileController.listIncidents);
 
 module.exports = router;

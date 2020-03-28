@@ -18,7 +18,7 @@ module.exports = {
         return a[0];
     },
     async list({offset, max, ong_id}){
-        const count = await connection('incidents').count();
+        const {count} = await connection('incidents').count('*',{as: 'count'}).first();
         const results = count ? await connection
             .select([...Incidents.publicFields].map(field=>`i.${field}`).concat([...Ongs.publicFields].map(field=>`o.${field}`)))
             .innerJoin('ongs as o', 'o.id', 'i.ong_id')
