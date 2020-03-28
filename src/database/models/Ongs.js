@@ -10,6 +10,6 @@ module.exports = {
         'id',
     ], 
     hiddenFields: [
-        
+        'password'
     ]
 }
