@@ -41,7 +41,7 @@ module.exports = {
         max = new Number(max).valueOf() || defaultMaxValue;
         try{
             const {count, results} = await IncidentsService.listAll({offset, max});
-            res.header('X-Total-Count', count['count(*)']);
+            res.header('X-Total-Count', count);
             res.json(results);
         }catch(e){
             console.log(e);

@@ -34,9 +34,9 @@ module.exports = {
         }
     },
     async listAll({offset, max}){
-        const count = await connection('incidents').count();
+        const {totalCount:count} = await connection('incidents').count('*', {as: 'totalCount'}).first();
         const results = count ? await connection
-            .select([...Incidents.publicFields].map(field=>`i.${field}`).concat([...Ongs.publicFields].map(field=>`o.${field} as ong.${field}`)))
+            .select([...Incidents.publicFields].map(field=>`i.${field}`).concat([...Ongs.publicFields].map(field=>`o.${field} as ong_${field}`)))
             .innerJoin('ongs as o', 'o.id', 'i.ong_id')
             .from('incidents as i')
             .limit(max)
