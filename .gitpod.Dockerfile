@@ -1,4 +1,4 @@
-FROM gitpod/workspace-postgres
+FROM gitpod/workspace-postgres:branch-clu-pin-postgresql-to-version-12
                     
 USER gitpod
 
